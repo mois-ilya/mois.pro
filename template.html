@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="$if(lang)$$lang$$else$en$endif$">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>$if(pagetitle)$$pagetitle$$else$$title$$endif$</title>
+$if(description)$<meta name="description" content="$description$">
+$endif$$if(permalink)$<link rel="canonical" href="https://mois.pro$permalink$">
+$endif$$-- Every edition lists the whole set, itself included: that is what makes a
+$-- search engine treat them as one page in two languages, not two pages that
+$-- happen to say the same thing.
+$for(alternate)$<link rel="alternate" hreflang="$alternate.lang$" href="https://mois.pro$alternate.href$">
+$endfor$$if(xdefault)$<link rel="alternate" hreflang="x-default" href="https://mois.pro$xdefault$">
+$endif$<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="stylesheet" href="/assets/tokens.css">
+$for(css)$<link rel="stylesheet" href="$css$">
+$endfor$
+</head>
+<body>
+<main>
+<header class="doc-head">
+  <p class="doc-back"><a href="/">&larr; mois.pro</a></p>
+$if(headline)$
+  <h1>$author$</h1>
+  <p class="role">$headline$</p>
+  <div class="contact">$contact$</div>
+$else$
+  <h1>$title$</h1>
+$endif$$if(translation)$
+  <p class="doc-lang"><a href="$translation.href$" lang="$translation.lang$" hreflang="$translation.lang$">$translation.label$</a></p>
+$endif$
+</header>
+$body$
+<footer class="doc-foot">
+  <p><a href="/">mois.pro</a></p>
+</footer>
+</main>
+</body>
+</html>

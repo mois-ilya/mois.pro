@@ -1,0 +1,32 @@
+/* Colour and type tokens shared by the landing page, the projects page and the
+   HTML build of the CV, so the three read as one system.
+
+   Both palettes are always defined and the browser picks one from the reader's
+   system setting. There is deliberately no theme switcher: it would need
+   JavaScript and local storage, and would flash the wrong theme on load. */
+
+:root {
+  color-scheme: light dark;
+
+  --bg: #fdfdfc;
+  --ink: #1a1a1a;
+  --muted: #565656;
+  --rule: #d8d8d8;
+  --link: #1a4f8a;
+  --surface: #f4f3f1;
+
+  --serif: Charter, "Iowan Old Style", Georgia, "Times New Roman", serif;
+  --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Helvetica, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #131313;
+    --ink: #e8e6e3;
+    --muted: #a3a3a3;
+    --rule: #333;
+    /* Lighter than the light-theme link: #1a4f8a is unreadable on dark. */
+    --link: #7fb0e0;
+    --surface: #1c1c1c;
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "mois-pro",
+  // No Worker script: this is a static site, so Cloudflare serves the assets
+  // directly and no code runs on a request.
+  "compatibility_date": "2026-08-19",
+  "assets": {
+    "directory": "./dist",
+    // Directory-style URLs: /cv serves dist/cv/index.html, and /cv/ (with the
+    // trailing slash) redirects to /cv so links printed on paper stay canonical.
+    //
+    // This has to be drop-trailing-slash, not the default. auto- does the
+    // opposite for a folder index: it 307s /cv to /cv/, which made every
+    // canonical and hreflang tag on the site point at a redirect rather than at
+    // the URL that answers 200. Verified against the deployed site, not guessed.
+    "html_handling": "drop-trailing-slash",
+    "not_found_handling": "404-page"
+  },
+  "routes": [
+    { "pattern": "mois.pro", "custom_domain": true },
+    { "pattern": "www.mois.pro", "custom_domain": true }
+  ]
+}

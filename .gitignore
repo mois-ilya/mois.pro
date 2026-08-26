@@ -1,0 +1,6 @@
+dist/
+personal-website/
+_site/
+.sass-cache/
+.playwright-mcp/
+.wrangler/

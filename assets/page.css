@@ -1,0 +1,81 @@
+/* The two document pages built from Markdown: the CV and the projects list.
+   Tokens come from tokens.css; the landing page has its own sheet.
+
+   Single column, because that is what reads on a phone and what survives text
+   extraction — the same reason the PDF is single column. */
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 16px/1.55 var(--serif);
+}
+
+main {
+  max-width: 46rem;
+  margin: 0 auto;
+  /* 1.5rem, the landing page's gutter: crossing from / to /cv used to shift
+     every line by 4px, which reads as two different sites. */
+  padding: 3rem 1.5rem 0;
+}
+
+a { color: var(--link); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+
+/* Name, one-line pitch, contacts — the same block the PDF opens with. */
+.doc-head { margin-bottom: 2.25rem; }
+
+/* The CV runs past four thousand pixels on a phone, and the only link back to
+   the site used to be at the very bottom of it. */
+.doc-back {
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  margin: 0 0 1.1rem;
+}
+.doc-head h1 { font-size: 2rem; letter-spacing: -0.01em; margin: 0 0 0.4rem; }
+.doc-head .role { margin: 0 0 0.3rem; }
+.doc-head .contact { color: var(--muted); font-size: 0.92rem; text-wrap: pretty; }
+.doc-head .contact p { margin: 0; }
+
+/* The same document in the other language. Set in the language it leads to, so
+   the reader who wants it catches it and everyone else reads past it. */
+.doc-head .doc-lang {
+  font-family: var(--sans);
+  font-size: 0.88rem;
+  margin: 0.65rem 0 0;
+}
+
+h2 {
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin: 2.4rem 0 0.9rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+h3 { font-size: 1.02rem; margin: 1.5rem 0 0.1rem; }
+
+/* The meta line under each job heading: dates, location, context. */
+h3 + p { color: var(--muted); font-size: 0.92rem; margin: 0 0 0.5rem; text-wrap: pretty; }
+
+p { margin: 0 0 0.9rem; }
+ul { padding-left: 1.1rem; margin: 0.4rem 0 0; }
+li { margin-bottom: 0.5rem; }
+
+.doc-foot {
+  margin-top: 3.5rem;
+  padding: 1.5rem 0 3rem;
+  border-top: 1px solid var(--rule);
+  font-family: var(--sans);
+  font-size: 0.85rem;
+}
+
+@media print {
+  main { max-width: none; padding: 0; }
+  a { color: inherit; }
+  .doc-foot, .doc-lang, .doc-back { display: none; }
+}

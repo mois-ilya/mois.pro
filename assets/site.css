@@ -1,0 +1,161 @@
+/* The landing page and the projects page. Tokens come from tokens.css.
+
+   No JavaScript anywhere on this site: nothing here needs it, and a page that
+   is only text and links should not ask the reader to run code. */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  padding: 0 1.5rem;
+  background: var(--bg);
+  color: var(--ink);
+  font: 16px/1.6 var(--serif);
+}
+
+a { color: var(--link); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+a:hover { text-decoration-thickness: 2px; }
+
+/* --- the first screen: nothing but who I am ------------------------------- */
+
+.hero {
+  min-height: 100vh;
+  min-height: 100svh;      /* svh keeps mobile browser chrome from cropping it */
+  display: flex;
+  align-items: center;
+  max-width: 52rem;
+  margin: 0 auto;
+}
+
+.hero-inner {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  padding: 4rem 0;
+  /* A flex item defaults to min-width: auto and refuses to shrink below its
+     content, which on a phone pushes the text off the right edge. */
+  min-width: 0;
+  width: 100%;
+}
+
+.portrait {
+  flex: 0 0 auto;
+  width: 14rem;
+  height: 14rem;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--rule);
+}
+
+.hero h1 {
+  font-size: clamp(2.5rem, 7vw, 3.75rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.5rem;
+}
+
+.role {
+  font-family: var(--sans);
+  /* Ignored where unsupported, which is the right failure: it only ever moves
+     a word down to keep the last line from being one word on its own. */
+  text-wrap: pretty;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+  margin: 0 0 0.35rem;
+}
+
+/* The one line on the site that goes stale. Set slightly forward of the role
+   line above it, because it is the thing a visitor most often came to check. */
+.status {
+  font-family: var(--sans);
+  text-wrap: pretty;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  margin: 1rem 0 1.5rem;
+}
+.status .when {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin-top: 0.2rem;
+}
+
+.pitch { font-size: 1.15rem; margin: 0 0 1.75rem; max-width: 36rem; }
+
+.links { display: flex; flex-wrap: wrap; gap: 1.25rem; margin: 0; font-family: var(--sans); font-size: 0.95rem; }
+
+/* --- everything below the fold -------------------------------------------- */
+
+main { max-width: 46rem; margin: 0 auto; padding-bottom: 5rem; }
+
+section { padding-top: 3.5rem; }
+
+h2 {
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin: 0 0 1.25rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+p { margin: 0 0 1rem; }
+
+.work { list-style: none; padding: 0; margin: 0; }
+.work li { margin-bottom: 1.1rem; }
+.work .what { font-family: var(--sans); font-size: 0.95rem; font-weight: 600; }
+
+.cv-links { background: var(--surface); border-radius: 6px; padding: 1.1rem 1.25rem; }
+.cv-links p:last-child { margin-bottom: 0; }
+
+footer {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 2rem 0 3rem;
+  border-top: 1px solid var(--rule);
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+/* Stack the hero on narrow screens; the portrait leads.
+
+   Everything stays left-aligned, exactly as it is beside the portrait on a wide
+   screen. An earlier version centred the stack, which meant the pitch — set
+   left, because centred prose is unreadable — lined up with nothing above or
+   below it, and left the role and status lines ragged on both edges at the one
+   size where that costs the most.
+
+   The text column needs an explicit width: in a column flexbox, a child is
+   sized to its own content, which is wider than a phone screen.
+
+   The tightened spacing is not taste. At 375x553 — an iPhone SE in Safari with
+   the address bar showing, which is exactly what 100svh means there — the hero
+   ran to 675px, so the pitch was cut mid-sentence and every contact link sat
+   below the fold. The whole point of this screen is that it is self-contained. */
+@media (max-width: 40rem) {
+  .hero-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+    padding: 2rem 0 3rem;
+  }
+  .hero-inner > div { width: 100%; }
+  .portrait { width: 7.5rem; height: 7.5rem; }
+  .status { margin: 0.75rem 0 1.25rem; }
+  .pitch { max-width: none; margin-bottom: 1.25rem; }
+  .links { gap: 0.85rem 1.25rem; }
+}
+
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.9em;
+  background: var(--surface);
+  padding: 0.1em 0.3em;
+  border-radius: 3px;
+}
