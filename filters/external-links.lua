@@ -5,8 +5,11 @@
 -- because it opens a mail client, not a page.
 
 local function is_external(url)
-  if not url:match("^https?://") then return false end
-  return not url:match("^https?://[^/]*mois%.pro")
+  local host = url:match("^https?://([^/:?#]+)")
+  if not host then return false end
+
+  host = host:lower()
+  return host ~= "mois.pro" and not host:match("%.mois%.pro$")
 end
 
 function Link(el)
