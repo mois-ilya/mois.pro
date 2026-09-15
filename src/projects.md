@@ -3,48 +3,48 @@ title: Projects
 permalink: /projects
 ---
 
-Everything I am building or have built.
+The two products at the top are still private. Everything after them links to code, a
+specification, or documentation that can be inspected directly.
 
-## Building now
+## In development
 
-**Expense splitting** — a service for splitting shared costs between people. Nothing is
-overwritten: every change is appended as an event, so two people editing the same bill both land,
-and any balance is derived rather than patched. The settlement maths is checked by property-based
-tests against a simpler reference implementation. Private for now.
+**Expense splitting** records every change as an event instead of replacing the current bill.
+Concurrent edits both survive, balances can be rebuilt from history, and property-based tests
+compare the settlement algorithm with a simpler reference implementation.
 
-**Receipt scanning** — a photo of a bill becomes line items that everyone at the table claims at
-once. It runs entirely on Cloudflare Workers with no origin server. A staged model pipeline reads
-the photo: the image becomes text up front, each stage can fall back to another vendor, and the
-arithmetic is checked against the receipt total before anyone is shown a number. Private for now.
+**Receipt scanning** turns a photo into line items that several people can claim at the same time.
+It runs entirely on Cloudflare Workers. The extraction pipeline separates image reading from later
+stages, can switch model vendors at each boundary, and rejects results whose arithmetic does not
+match the receipt total.
 
-## TON ecosystem
+## Developer platforms and TON
 
-**[tonapi-js](https://github.com/tonkeeper/tonapi-js)** — the TypeScript SDK for TonAPI, about
-14k installs a week. Sole maintainer since mid-2024. I rewrote the packages and wrote the
-generator behind them: custom templates, int64 mapped to bigint, isomorphic output for browser
-and Node, one runtime dependency.
+**[tonapi-js](https://github.com/tonkeeper/tonapi-js)** is the generated TypeScript client for
+TonAPI. I maintained it alone from mid-2024 through March 2026, rewrote its packages, and built the
+generator that maps OpenAPI `int64` values to `bigint` and produces the same client for browsers
+and Node with one runtime dependency.
 
-**[ton-console](https://github.com/tonkeeper/ton-console)** — Tonkeeper's developer console.
-Sole developer for 21 months: billing moved from TON to USDT with no hard cutover, webhooks
-management, pricing tiers, the analytics query builder, airdrop tooling.
+**[ton-console](https://github.com/tonkeeper/ton-console)** is Tonkeeper's developer console. I was
+its only developer for 21 months. The work includes billing moved from TON to USDT without a hard
+cutover, webhooks management, pricing tiers, analytics queries and airdrop tooling.
 
-**[TON Connect specification](https://github.com/ton-blockchain/ton-connect)** — two of my edits
-are in the protocol spec: the address format in a sign-data response, and appDomain encoding.
-Both were places where the wording let independent implementations disagree.
+**[TON Connect](https://github.com/ton-blockchain/ton-connect)** is the protocol used by apps and
+TON wallets to connect. Two ambiguities I found became specification changes: the address format
+in a sign-data response and the encoding of `appDomain`.
 
-**[ton-sign-data-reference](https://github.com/mois-ilya/ton-sign-data-reference)** — a TypeScript
-reference implementation of TON Connect SignData: a wallet signing arbitrary text, binary or TON
-cell payloads, small enough to read in one sitting.
+**[ton-sign-data-reference](https://github.com/mois-ilya/ton-sign-data-reference)** is a compact
+TypeScript implementation of TON Connect SignData. It covers text, binary and TON-cell payloads
+and is intended to be read alongside the specification.
 
-**[opentonapi](https://github.com/tonkeeper/opentonapi)** — the public API schema and its Go
-backend. I contributed to the OpenAPI spec, mostly the parts generated clients break on: 64-bit
-integers that lose precision in JavaScript, date formats, response types.
+**[opentonapi](https://github.com/tonkeeper/opentonapi)** contains TonAPI's public OpenAPI schema
+and Go backend. My contribution was almost entirely to the schema: 64-bit integers in JavaScript,
+date formats and response types. I made two small fixes in the Go code.
 
-**[tonconsole-docs](https://github.com/tonkeeper/tonconsole-docs)** — integration guides on
-transaction tracking, data signing and hash normalization.
+**[tonconsole-docs](https://github.com/tonkeeper/tonconsole-docs)** contains integration guides I
+wrote on transaction tracking, data signing and hash normalization.
 
 ## This site
 
-**[mois.pro](https://github.com/mois-ilya/mois.pro)** — the page you are reading, and both
-editions of my CV. Markdown sources, pandoc and typst for the PDF, a build check that asserts the
-result is still parseable before it can be sent anywhere.
+**[mois.pro](https://github.com/mois-ilya/mois.pro)** builds this page, two CV pages and two PDFs
+from one repository. Pandoc renders the Markdown, Typst produces the PDFs, and a build check reads
+their text layer to make sure dates still belong to the correct jobs.

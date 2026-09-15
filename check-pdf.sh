@@ -3,7 +3,7 @@
 # application. Every check here corresponds to something that has actually gone
 # wrong with this document at some point.
 #
-#   ./check.sh Ilya-Mois-CV.pdf src/cv.md
+#   ./check-pdf.sh dist/Ilya-Mois-CV.pdf src/cv.md
 #
 # Section names and date formats are read from the source rather than hardcoded,
 # so this works for any language the CV is written in.
@@ -12,7 +12,7 @@
 
 set -uo pipefail
 
-PDF="${1:-Ilya-Mois-CV.pdf}"
+PDF="${1:-dist/Ilya-Mois-CV.pdf}"
 SRC="${2:-src/cv.md}"
 fail=0
 
@@ -27,8 +27,10 @@ bad()  { say "$1" "FAIL — $2"; fail=1; }
 [ -f "$PDF" ] || { echo "no such file: $PDF"; exit 1; }
 
 info=$(pdfinfo "$PDF")
-text=$(pdftotext "$PDF" -)
-raw=$(pdftotext -raw "$PDF" -)
+# Poppler prefixes the first line of each new page with a form-feed character.
+# Strip it before line-based checks so a section may legitimately begin a page.
+text=$(pdftotext "$PDF" - | tr -d '\f')
+raw=$(pdftotext -raw "$PDF" - | tr -d '\f')
 
 # --- the document itself -----------------------------------------------------
 

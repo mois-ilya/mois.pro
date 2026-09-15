@@ -23,11 +23,11 @@
     <img class="portrait" src="/photo.jpeg" width="400" height="400" alt="Ilya Mois">
     <div>
       <h1>Ilya Mois</h1>
-      <p class="role">Software engineer · remote, usually from Tbilisi (GMT+4)</p>
-      <!-- The status line. This is the one sentence on the site that goes stale:
-           change it when the situation changes, and change the month with it. -->
+      <p class="role">Software engineer · remote or on-site in Tbilisi (GMT+4)</p>
+      <!-- job-search:start -->
       <p class="status">Looking for a full-time role: sole engineer on a product, or
-        platform and DX inside a team. <span class="when">August 2026</span></p>
+        platform and DX inside a team. <span class="when">@JOB_SEARCH_UPDATED@</span></p>
+      <!-- job-search:end -->
       <p class="pitch">I build a product's technical side end to end — lately that has meant
         developer platforms: APIs, and the SDKs other engineers install.</p>
       <p class="links">
@@ -43,61 +43,53 @@
 <main>
 
 <section>
-  <h2>About</h2>
-  <p>I've been a software engineer for eight years. The last two went into Tonkeeper's developer
-    platform: the console, the TonAPI SDKs, and two passages of the TON Connect spec that were vague enough for independent implementations to
-    disagree.</p>
-  <p>Work aimed at other developers has one property I like — when something is wrong, someone
-    tells you within a day, usually with a reproduction attached.</p>
-  <p>Up close the work is less tidy than a list of it looks. The SDK is generated from an OpenAPI schema,
-    and to make the generator emit what the schema actually meant I had to write custom templates —
-    which crashed, because one of the helpers the generator hands to a template arrives without its
-    <code>this</code>. The fix is a single line. It lives in
-    <a href="https://github.com/tonkeeper/tonapi-js/blob/main/patches/swagger-typescript-api%2B13.0.9.patch" target="_blank" rel="noopener">patches/</a>
-    as a diff against someone else's package, and the generator version is pinned exactly so the
-    diff keeps applying.</p>
-  <p>Before Tonkeeper: a booking platform, an Amazon Seller Central ingestion pipeline, a backend
-    moved off a VPS onto AWS, and a stretch leading three to five engineers through about eleven
-    releases.</p>
+  <h2>Developer platforms</h2>
+  <p>At Tonkeeper, I worked on the layer between the public API and the engineers using it: the
+    OpenAPI schema, generated TypeScript SDK, developer console and integration guides. Some of
+    that work also reached the wallet and the TON Connect specification.</p>
+  <p>For 21 months I was the only developer on the
+    <a href="https://github.com/tonkeeper/ton-console" target="_blank" rel="noopener">console</a>.
+    I moved its billing from TON to USDT without forcing existing subscribers through a hard
+    cutover, and built webhooks management, pricing tiers, analytics queries and airdrop tooling.</p>
+  <p>From mid-2024 I also maintained
+    <a href="https://github.com/tonkeeper/tonapi-js" target="_blank" rel="noopener">tonapi-js</a>,
+    the TonAPI TypeScript SDK, on my own. I rewrote its packages and generator so the public schema
+    produced an isomorphic client with <code>int64</code> values preserved as <code>bigint</code>
+    and one runtime dependency.</p>
+  <p>Two ambiguities I found in TON Connect became edits to the
+    <a href="https://github.com/ton-blockchain/ton-connect" target="_blank" rel="noopener">TON Connect protocol specification</a>:
+    the address format in a sign-data response and the encoding of <code>appDomain</code>. In both
+    cases, the old wording allowed two conforming implementations to produce different messages
+    for the same request.</p>
 </section>
 
 <section>
-  <h2>Now</h2>
-  <p>Two products, both mine, both still private.</p>
-  <p>One splits expenses. Nothing in it is ever overwritten: every edit is appended as an event, so
-    when two people edit the same bill at once both edits survive, and balances are derived rather
-    than patched.</p>
-  <p>The other turns a photo of a receipt into line items everyone at the table claims at once. It
-    started on a server I ran myself. At the traffic it actually had, that server cost more than it
-    was worth and took longer to deploy to than the changes took to write, so I moved the whole
-    thing onto Cloudflare Workers. There is no origin server now — that was a correction, not the
-    original plan.</p>
+  <h2>Building now</h2>
+  <p>Since March 2026 I have been building two private products.</p>
+  <p>The first splits shared expenses. An edit appends an event instead of overwriting the bill, so
+    concurrent changes survive and every balance can be rebuilt from history. Property-based tests
+    compare the settlement algorithm with a smaller reference implementation.</p>
+  <p>The second turns a receipt photo into line items that several people can claim at the same
+    time. It runs on Cloudflare Workers with no origin server. A staged extraction pipeline can
+    switch vendors at each step, and its arithmetic must match the receipt total before the result
+    is shown.</p>
+  <p>The public repositories and both private products are collected on the
+    <a href="/projects">projects page</a>.</p>
 </section>
 
 <section>
-  <h2>Selected work</h2>
-  <ul class="work">
-    <li><span class="what"><a href="https://github.com/tonkeeper/tonapi-js" target="_blank" rel="noopener">tonapi-js</a></span> —
-      the TypeScript SDK for TonAPI, ~14k installs a week. I've maintained it on my own since
-      mid-2024, and rewrote the packages and the generator behind them.</li>
-    <li><span class="what"><a href="https://github.com/tonkeeper/ton-console" target="_blank" rel="noopener">ton-console</a></span> —
-      Tonkeeper's developer console: billing, webhooks, pricing tiers, the analytics query
-      builder. I was the only developer on it for 21 months, and moved billing from TON to USDT
-      without a hard cutover for users already paying in TON.</li>
-    <li><span class="what"><a href="https://github.com/ton-blockchain/ton-connect" target="_blank" rel="noopener">TON Connect specification</a></span> —
-      two of my edits are in the protocol: the address format in a sign-data response, and
-      appDomain encoding.</li>
-    <li><span class="what"><a href="https://github.com/mois-ilya/ton-sign-data-reference" target="_blank" rel="noopener">ton-sign-data-reference</a></span> —
-      a TypeScript reference implementation of TON Connect SignData.</li>
-  </ul>
-  <p>Everything else I'm building is on the <a href="/projects">projects page</a>.</p>
+  <h2>Earlier work</h2>
+  <p>Before Tonkeeper I worked on a booking platform, streaming speech-to-text, an Amazon Seller
+    Central ingestion pipeline, and a backend migration from a VPS to AWS. At Upper Echelon
+    Products I moved from JavaScript developer to technical lead and took three to five engineers
+    and one to two QA through about eleven releases.</p>
 </section>
 
 <section>
   <h2>CV</h2>
   <div class="cv-links">
-    <p>The full history — every role, every link: read it as a
-      <a href="/cv">web page</a> or take the <a href="/Ilya-Mois-CV.pdf">PDF</a>.</p>
+    <p>The full chronology, technologies and repository links are available as a
+      <a href="/cv">web page</a> or <a href="/Ilya-Mois-CV.pdf">PDF</a>.</p>
     <p lang="ru">По-русски: <a href="/cv/ru" hreflang="ru">веб-версия</a> ·
       <a href="/Ilya-Mois-CV-ru.pdf" hreflang="ru">PDF</a>.</p>
   </div>
@@ -105,16 +97,17 @@
 
 <section>
   <h2>Contact</h2>
-  <!-- ilya@ here, job.offers@ on the CV. The address should match who reads the
-       document it is printed on: a CV is only ever read while hiring, but this
-       page is read by anyone, and job.offers@ tells most of them to go away. -->
-  <p><a href="https://t.me/moisle" target="_blank" rel="noopener">Telegram</a> is fastest. <a href="mailto:ilya@mois.pro">Email</a> gets read the same day.</p>
+  <p><a href="https://t.me/moisle" target="_blank" rel="noopener">Telegram</a> is fastest.
+    <a href="mailto:ilya@mois.pro">Email</a> gets read the same day.</p>
+  <p>If something above overlaps with what you're working on, send the context and what you need.
+    No formal introduction necessary.</p>
+  <!-- job-search:start -->
   <p>If you're writing about a job, skip the cover letter — what the team does, what I'd be working
     on and a rough range is enough to start.</p>
-  <p>Things I'd rather say upfront: I'm not much use where shipping a button takes a quarter of
-    approvals, and I don't take gambling work. I use LLM tooling every day and would bring it with
-    me; if a team has ruled that out we probably won't fit, though I'd sooner set it up for them
-    and teach it than argue about whether it counts as engineering.</p>
+  <p>I don't take gambling work. I use LLM tooling every day and expect to keep using it; a team
+    that has ruled it out is unlikely to be a fit. The same is true of a process where shipping a
+    button takes a quarter of approvals.</p>
+  <!-- job-search:end -->
 </section>
 
 </main>
