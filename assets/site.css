@@ -89,7 +89,7 @@ a:hover { text-decoration-thickness: 2px; }
 
 /* --- everything below the fold -------------------------------------------- */
 
-main { max-width: 46rem; margin: 0 auto; padding-bottom: 5rem; }
+main { max-width: 50rem; margin: 0 auto; padding-bottom: 5rem; }
 
 section { padding-top: 3.5rem; }
 
@@ -111,10 +111,13 @@ p { margin: 0 0 1rem; }
 .work .what { font-family: var(--sans); font-size: 0.95rem; font-weight: 600; }
 
 .cv-links { background: var(--surface); border-radius: 6px; padding: 1.1rem 1.25rem; }
+.cv-links p { text-wrap: pretty; }
+/* A link that breaks across lines reads as two links. */
+.cv-links a { white-space: nowrap; }
 .cv-links p:last-child { margin-bottom: 0; }
 
 footer {
-  max-width: 46rem;
+  max-width: 50rem;
   margin: 0 auto;
   padding: 2rem 0 3rem;
   border-top: 1px solid var(--rule);
