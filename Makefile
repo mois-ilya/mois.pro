@@ -10,6 +10,7 @@
 #   make clean
 
 TPL_PDF  := template.typ
+FONTS    := fonts/Inter-SemiBold.ttf
 TPL_HTML := template.html
 
 # Temporary landing-page state lives outside the copy. LOOKING_FOR_WORK can
@@ -44,11 +45,11 @@ all: $(PDF_EN) $(PDF_RU)
 $(DIST):
 	mkdir -p $@
 
-$(PDF_EN): $(SRC_EN) $(TPL_PDF) | $(DIST)
-	$(PANDOC) $(SRC_EN) $(CV_FLAGS) --template=$(TPL_PDF) --pdf-engine=typst -o $@
+$(PDF_EN): $(SRC_EN) $(TPL_PDF) $(FONTS) | $(DIST)
+	$(PANDOC) $(SRC_EN) $(CV_FLAGS) --template=$(TPL_PDF) --pdf-engine=typst --pdf-engine-opt=--font-path=fonts -o $@
 
-$(PDF_RU): $(SRC_RU) $(TPL_PDF) | $(DIST)
-	$(PANDOC) $(SRC_RU) $(CV_FLAGS) --template=$(TPL_PDF) --pdf-engine=typst -o $@
+$(PDF_RU): $(SRC_RU) $(TPL_PDF) $(FONTS) | $(DIST)
+	$(PANDOC) $(SRC_RU) $(CV_FLAGS) --template=$(TPL_PDF) --pdf-engine=typst --pdf-engine-opt=--font-path=fonts -o $@
 
 # dist/ is what gets deployed. Directory-style URLs (/cv, /cv/ru, /projects)
 # rather than /cv.html, because they are what goes on paper and in an email.
