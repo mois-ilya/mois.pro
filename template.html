@@ -20,15 +20,13 @@ $endfor$
 <body>
 <main>
 <header class="doc-head">
-  <p class="doc-back"><a href="/">&larr; mois.pro</a></p>
+  <p class="doc-back"><a href="/">&larr; mois.pro</a><span class="doc-alt">$if(pdf)$<a href="$pdf$">PDF</a>$endif$$if(pdf)$$if(translation)$ · $endif$$endif$$if(translation)$<a href="$translation.href$" lang="$translation.lang$" hreflang="$translation.lang$">$translation.label$</a>$endif$</span></p>
 $if(headline)$
   <h1>$author$</h1>
   <p class="role">$headline$</p>
   <div class="contact">$contact$</div>
 $else$
   <h1>$title$</h1>
-$endif$$if(translation)$
-  <p class="doc-lang"><a href="$translation.href$" lang="$translation.lang$" hreflang="$translation.lang$">$translation.label$</a></p>
 $endif$
 </header>
 $body$
