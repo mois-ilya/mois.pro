@@ -1,13 +1,14 @@
 ---
 title: Ilya Mois — CV
 author: Ilya Mois
-headline: Software Engineer · Remote or on-site in Tbilisi, Georgia (GMT+4)
+headline: Senior Full-Stack Engineer · Remote or on-site in Tbilisi, Georgia (GMT+4)
 contact: |
   [job.offers@mois.pro](mailto:job.offers@mois.pro) ·
   [github.com/mois-ilya](https://github.com/mois-ilya) ·
   [linkedin.com/in/moisilya](https://www.linkedin.com/in/moisilya) ·
   Russian (native), English (professional)
 permalink: /cv
+pdf: /Ilya-Mois-CV.pdf
 translation:
   href: /cv/ru
   lang: ru
@@ -22,47 +23,69 @@ xdefault: /cv
 
 ## Summary
 
-Software engineer with eight years across product interfaces, API contracts, backend services and
-developer tooling. Most recently at Tonkeeper, I was the sole developer of the developer console
-and sole maintainer of the TypeScript SDK, with further work in TonAPI's public schema, integration
-documentation and wallet. I now build two products solo.
+I have been building web products since 2018, most recently developer platforms and payments. At
+Tonkeeper, I owned Tonconsole, TonAPI's developer console, for 21 months, including its billing and
+documentation, and maintained TonAPI's TypeScript SDK, which has about 16k weekly downloads. In
+2026, I built Diwy Split on my own, a Telegram Mini App that splits restaurant bills from receipt
+photos: from the interface and LLM recognition pipeline to the server it runs on. It went from
+prototype to launch in under a month of active work.
+
+I work with AI on both sides of a product. Inside it, Diwy reads receipts with an LLM pipeline, and
+prompt and model changes are benchmarked on receipts checked by hand before release. Behind it,
+coding agents work within a workflow of test scenarios, review by several models and screenshot
+tests in CI, so nothing reaches users until every test passes and I have reviewed every changed
+screen.
 
 ## Experience
 
-### Independent — Software Engineer
+### Diwy Split — side project, shipped
 
-*Mar 2026 – Present · Tbilisi · two private products, built solo*
+*Mar 2026 – Present · [diwy.me](https://diwy.me) · Telegram Mini App for splitting restaurant bills
+from receipt photos · solo, live in beta*
 
-- **Expense splitting** — building an event-sourced service where edits append instead of replacing
-  a bill, so concurrent changes survive and balances can be rebuilt from history. Property-based
-  tests compare settlement math with a smaller reference implementation.
-- **Receipt scanning** — building a service that turns a receipt photo into line items several
-  people can claim at once. It runs entirely on Cloudflare Workers; extraction is staged across
-  interchangeable model vendors, and the result is rejected unless its arithmetic matches the
-  receipt total.
+- **LLM recognition** — models misread receipts, and a wrong amount destroys trust. The model only
+  transcribes, code does the arithmetic, and a person confirms anything that changes what someone
+  pays. I scored around 20 model pairings on hand-checked receipts and chose one at 0.991 for $0.004 per receipt.
+- **Regressions** — product changes brought side effects that were hard to spot and trace. I rebuilt
+  77 bill states through the app's own commands. They drive manual QA and pixel-exact iOS and
+  Android screenshots in CI.
+- **Availability** — the app did not open in Russia, where Cloudflare is throttled. GeoDNS
+  sends users there through a relay and everyone else through Cloudflare. Monitoring and alerts
+  cover both routes.
+- **UX** — a paper receipt had to become an intuitive screen with no dead ends. The hardest case
+  was taking only part of a dish. I prototyped the flows in Claude Design and added a receipt editor
+  before launch.
 
-### Tonkeeper — Software Engineer, Developer Platform & DX
+### Tonkeeper — Software Engineer, Developer Platform & Developer Experience
 
-*Jun 2024 – Mar 2026 · Remote · TON Apps, the 23-person team behind Tonkeeper, a wallet with 12M+
-MAU. Most of this work is public and linked below.*
+*Jun 2024 – Mar 2026 · Remote · TON Apps: 23-person team behind the Tonkeeper wallet (12M+ MAU).
+Most work is public, linked below.*
 
-- **[Developer console](https://github.com/tonkeeper/ton-console)** — sole developer for 21 months.
-  Moved billing from TON to USDT without forcing existing users through a cutover, and
-  [replaced the MobX state layer](https://github.com/tonkeeper/ton-console/pull/144) with React Query
-  to stop duplicate events and server requests.
-- **Console product work** — shipped webhook management and pricing, API tiers, billing history,
-  the analytics query builder and airdrop tooling.
+- **[Tonconsole](https://github.com/tonkeeper/ton-console)**, TonAPI's developer console — moved
+  billing to one USD balance matching plan prices, with TON or USDT top-ups. Migrated state to React
+  Query incrementally, isolating caches by user so accounts in one browser never share data.
+- **Console products** — shipped webhooks, dedicated liteservers, API plans and analytics. One
+  tested pricing function made a threefold webhook price change a constants edit. Liteserver buyers
+  download `global.config.json` without manual edits. Downgrades show the unspent balance instead
+  of being blocked.
+- **Free TonAPI limits for dApps** — took an idea I was given and designed and built it on every
+  wallet platform, including QA's test setup. The wallet injects `window.tonapi.fetch`; the SDK
+  uses it without configuration, giving dApps inside Tonkeeper higher limits.
 - **[TypeScript SDK](https://github.com/tonkeeper/tonapi-js), ~16k weekly downloads** — sole
-  maintainer from mid-2024. Rebuilt its packages and generator to preserve `int64` values as
-  `bigint`, handle OpenAPI serialization edge cases, and emit one client for browsers and Node with
-  a single runtime dependency.
-- **[API schema](https://github.com/tonkeeper/opentonapi) and
-  [integration docs](https://github.com/tonkeeper/tonconsole-docs)** — changed the parts generated
-  clients exposed as ambiguous: integer and date formats, response types and operation grouping.
-  Wrote guides on transaction tracking, data signing and hash normalization.
-- **[Wallet](https://github.com/tonkeeper/tonkeeper-web)** — shipped non-liquid staking flows,
-  SSE-backed swap work and TON Connect fixes across web, desktop and extension; made third-party API
-  failures recoverable instead of letting them crash the app.
+  maintainer from mid-2024. Added `bigint`, address and cell formats to TonAPI's
+  [OpenAPI schema](https://github.com/tonkeeper/opentonapi), giving any generator exact amount
+  types. Kept old SDK paths as deprecated wrappers when the schema was regrouped.
+- **[Integration docs](https://github.com/tonkeeper/tonconsole-docs)** — generated the REST
+  reference from the same schema. Wrote the transaction-tracking and data-signing guides and the
+  cookbook.
+- **[Wallet](https://github.com/tonkeeper/tonkeeper-web)** — replaced polling of two DEX aggregators
+  with streamed Omniston swap quotes. Built desktop staking
+  ([merged after I left](https://github.com/tonkeeper/tonkeeper-web/pull/592)). Changed TRC20
+  sending errors from "Insufficient funds" to "temporarily unavailable" during TronGrid outages.
+  Fixed slow server rendering in Tonviewer, the explorer.
+- **Fees and wallet extensions** — wrote a fee estimator using TON's formulas, tested against real
+  transactions ([unfinished when I left](https://github.com/tonkeeper/tonkeeper-web/pull/550)).
+  Worked on sponsored-fee (gasless) transfers and W5 wallet extensions, including 2FA.
 
 ### Quintegro — Frontend Developer
 
@@ -83,8 +106,7 @@ MAU. Most of this work is public and linked below.*
 
 *Apr 2021 – Mar 2023 · Remote*
 
-- Promoted to lead; took 3–5 engineers and 1–2 QA through about 11 releases and mentored five junior
-  developers.
+- Promoted to team lead: ran 3–5 engineers and 1–2 QA through about 11 releases, mentored five juniors.
 - Built an Amazon Seller Central ingestion pipeline and moved the backend from a VPS to AWS with
   CI/CD. Standardised the frontend architecture and moved API documentation to Swagger.
 
@@ -105,26 +127,35 @@ MAU. Most of this work is public and linked below.*
 
 ## Selected Open Source
 
-- **TON Connect specification** — clarified two places where compliant implementations could sign
-  different messages for the same request: the address format in a sign-data response and
-  `appDomain` encoding. Both changes are in the
-  [protocol specification](https://github.com/ton-blockchain/ton-connect).
-- **Data signing** — implemented SignData in `@tonconnect/sdk`, covering text, binary and TON cell
-  payloads, and published a readable
-  [TypeScript reference implementation](https://github.com/mois-ilya/ton-sign-data-reference).
-- **Wallet capabilities** — added `requiredFeatures` and `preferredFeatures` to the SDK, so apps can
-  declare what they need and incompatible wallets are filtered before connection.
+- **[TON Connect SDK](https://github.com/ton-connect/sdk)**, the library dApps use to connect TON
+  wallets — implemented [data signing](https://github.com/ton-connect/sdk/pull/349) for text,
+  binary and TON cell payloads across the protocol, SDK and UI. Added wallet capabilities:
+  [required features](https://github.com/ton-connect/sdk/pull/324) filter out unsuitable wallets,
+  [preferred features](https://github.com/ton-connect/sdk/pull/348) rank them and prompt a
+  reconnect instead of failing silently.
+- **[TON Connect specification](https://github.com/ton-blockchain/ton-connect)** — wrote a
+  [sign-data reference implementation](https://github.com/mois-ilya/ton-sign-data-reference) with
+  tests. They exposed two places where compliant wallets could sign different messages for the
+  same request, both fixed in the spec: the response
+  [address format](https://github.com/ton-blockchain/ton-connect/pull/73) and
+  [`appDomain` encoding](https://github.com/ton-blockchain/ton-connect/pull/74), where the spec's own
+  example was wrong.
+- **[Telegram Bot Docs skill](https://github.com/mois-ilya/telegram-bot-docs-skill)** — an agent
+  skill that splits Telegram's bot documentation into about 1,000 searchable sections with a
+  freshness check, so coding agents read current docs rather than memory.
 
 ## Skills
 
+::: {typst:text:size="9.3pt"}
 - **Languages & frontend** — TypeScript, JavaScript, Python; Go (reading and small fixes); React,
-  Next.js, React Native
+  Next.js
 - **Backend & APIs** — Node.js, Fastify, NestJS, PostgreSQL, OpenAPI, REST, gRPC, webhooks, event
   sourcing
-- **Cloud & testing** — Cloudflare Workers, Durable Objects, AWS, Docker, CI/CD; Vitest, fast-check,
-  Testcontainers
+- **Cloud** — Cloudflare Workers, Durable Objects, AWS, Azure AI, Docker, CI/CD
+- **Testing** — Vitest, Playwright (pixel-exact screenshot tests), fast-check, Testcontainers
 - **Domains** — developer platforms and SDKs · payments and billing · Telegram Mini Apps and bots ·
   blockchain
+:::
 
 ## Education
 
