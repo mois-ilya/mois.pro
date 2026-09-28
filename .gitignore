@@ -4,3 +4,4 @@ _site/
 .sass-cache/
 .playwright-mcp/
 .wrangler/
+notes/
