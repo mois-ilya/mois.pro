@@ -19,12 +19,18 @@ include site.conf
 
 # Everything the pages built from Markdown share: the wrapper, the stylesheet,
 # and the filter that sends links leaving the site to a new tab.
-HTML_FLAGS := --template=$(TPL_HTML) --css=/assets/page.css \
+HTML_FLAGS := --template=$(TPL_HTML) --css=/assets/page.css --wrap=none \
               --lua-filter=filters/external-links.lua
 
 DIST   := dist
 PDF_EN := $(DIST)/Ilya-Mois-CV.pdf
 PDF_RU := $(DIST)/Ilya-Mois-CV-ru.pdf
+
+# Link-preview images. Typst renders them from og.typ at 72 ppi, where a point
+# is a pixel, and without a timestamp, so the same source gives the same bytes.
+OG_IMGS := $(DIST)/og.png $(DIST)/og-cv.png $(DIST)/og-cv-ru.png
+OG_DEPS := og.typ public/photo.jpeg $(FONTS)
+TYPST_OG = typst compile --root . --font-path fonts --ppi 72 --input kind=$(1) og.typ $@
 
 SRC_EN := src/cv.md
 SRC_RU := src/cv.ru.md
@@ -48,6 +54,15 @@ $(DIST):
 $(PDF_EN): $(SRC_EN) $(TPL_PDF) $(FONTS) | $(DIST)
 	$(PANDOC) $(SRC_EN) $(CV_FLAGS) --template=$(TPL_PDF) --pdf-engine=typst --pdf-engine-opt=--font-path=fonts -o $@
 
+$(DIST)/og.png: $(OG_DEPS) | $(DIST)
+	$(call TYPST_OG,site)
+
+$(DIST)/og-cv.png: $(OG_DEPS) | $(DIST)
+	$(call TYPST_OG,cv-en)
+
+$(DIST)/og-cv-ru.png: $(OG_DEPS) | $(DIST)
+	$(call TYPST_OG,cv-ru)
+
 $(PDF_RU): $(SRC_RU) $(TPL_PDF) $(FONTS) | $(DIST)
 	$(PANDOC) $(SRC_RU) $(CV_FLAGS) --template=$(TPL_PDF) --pdf-engine=typst --pdf-engine-opt=--font-path=fonts -o $@
 
@@ -56,7 +71,7 @@ $(PDF_RU): $(SRC_RU) $(TPL_PDF) $(FONTS) | $(DIST)
 site:
 	@rm -rf $(DIST)
 	@mkdir -p $(DIST)/assets $(DIST)/cv/ru $(DIST)/projects
-	@$(MAKE) --no-print-directory $(PDF_EN) $(PDF_RU)
+	@$(MAKE) --no-print-directory $(PDF_EN) $(PDF_RU) $(OG_IMGS)
 	@if [ "$(LOOKING_FOR_WORK)" = "true" ]; then \
 		sed -e '/<!-- job-search:start -->/d' \
 		    -e '/<!-- job-search:end -->/d' \

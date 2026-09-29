@@ -11,6 +11,18 @@ $-- search engine treat them as one page in two languages, not two pages that
 $-- happen to say the same thing.
 $for(alternate)$<link rel="alternate" hreflang="$alternate.lang$" href="https://mois.pro$alternate.href$">
 $endfor$$if(xdefault)$<link rel="alternate" hreflang="x-default" href="https://mois.pro$xdefault$">
+$endif$$if(ogimage)$$-- Link previews: only pages that name an image get them, and the image
+$-- holds nothing that goes stale (og.typ says why).
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="mois.pro">
+<meta property="og:title" content="$if(pagetitle)$$pagetitle$$else$$title$$endif$">
+$if(description)$<meta property="og:description" content="$description$">
+$endif$$if(permalink)$<meta property="og:url" content="https://mois.pro$permalink$">
+$endif$<meta property="og:image" content="https://mois.pro$ogimage$">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="$author$$if(headline)$, $headline$$endif$">
+<meta name="twitter:card" content="summary_large_image">
 $endif$<link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="stylesheet" href="/assets/tokens.css">

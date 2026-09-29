@@ -8,6 +8,8 @@ contact: |
   [linkedin.com/in/moisilya](https://www.linkedin.com/in/moisilya) ·
   Russian (native), English (professional)
 permalink: /cv
+description: Senior Full-Stack Engineer · Remote or on-site in Tbilisi, Georgia (GMT+4)
+ogimage: /og-cv.png
 pdf: /Ilya-Mois-CV.pdf
 translation:
   href: /cv/ru

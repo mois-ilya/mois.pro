@@ -1,6 +1,8 @@
 ---
 title: Projects
 permalink: /projects
+author: Ilya Mois
+ogimage: /og.png
 ---
 
 The two products at the top are still private. Everything after them links to code, a
