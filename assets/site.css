@@ -110,11 +110,11 @@ p { margin: 0 0 1rem; }
 .work li { margin-bottom: 1.1rem; }
 .work .what { font-family: var(--sans); font-size: 0.95rem; font-weight: 600; }
 
-.cv-links { background: var(--surface); border-radius: 6px; padding: 1.1rem 1.25rem; }
-.cv-links p { text-wrap: pretty; }
+/* The CV is also the first link under the name, so this section needs no box to
+   be found; it reads like the sections around it. */
+.cv-links { text-wrap: pretty; }
 /* A link that breaks across lines reads as two links. */
 .cv-links a { white-space: nowrap; }
-.cv-links p:last-child { margin-bottom: 0; }
 
 footer {
   max-width: 50rem;
