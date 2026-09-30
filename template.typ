@@ -67,8 +67,9 @@
 // The gap between bullets is wider than the line spacing inside one; when the
 // two were equal, a page of bullets read as one undivided block.
 #set list(marker: text(fill: muted)[•], indent: 0.1em, body-indent: 0.6em, spacing: 0.8em)
-// Keep a job's bullets close to its date line despite the wider paragraph gap.
-#show list: set block(above: 0.6em, below: 0.6em)
+// A job's first bullet sits as far from its date line as bullets sit from each
+// other; any closer and it read as part of the heading.
+#show list: set block(above: 0.8em, below: 0.6em)
 
 // Header block: name, then the one-line pitch, then contacts.
 #block(below: 1.3em)[
