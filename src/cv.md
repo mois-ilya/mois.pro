@@ -32,31 +32,29 @@ documentation, and maintained TonAPI's TypeScript SDK, which has about 16k weekl
 photos: from the interface and LLM recognition pipeline to the server it runs on. It went from
 prototype to launch in under a month of active work.
 
-I work with AI on both sides of a product. Inside it, Diwy reads receipts with an LLM pipeline, and
-prompt and model changes are benchmarked on receipts checked by hand before release. Behind it,
-coding agents work within a workflow of test scenarios, review by several models and screenshot
-tests in CI, so nothing reaches users until every test passes and I have reviewed every changed
-screen.
+I build LLM pipelines and release prompt or model changes only after automated evals against
+ground truth show no regression. I develop with coding agents inside a workflow of test scenarios,
+multi-model review and screenshot tests in CI, and nothing reaches users until every check passes.
 
 ## Experience
 
-### Diwy Split — side project, shipped
+### Diwy Split — side project
 
-*Mar 2026 – Present · [diwy.me](https://diwy.me) · Telegram Mini App for splitting restaurant bills
+*Mar 2026 – Present · [diwy.me](https://diwy.me) · Telegram Mini App that splits restaurant bills
 from receipt photos · solo, live in beta*
 
-- **LLM recognition** — models misread receipts, and a wrong amount destroys trust. The model only
-  transcribes, code does the arithmetic, and a person confirms anything that changes what someone
-  pays. I scored around 20 model pairings on hand-checked receipts and chose one at 0.991 for $0.004 per receipt.
-- **Regressions** — product changes brought side effects that were hard to spot and trace. I rebuilt
-  77 bill states through the app's own commands. They drive manual QA and pixel-exact iOS and
-  Android screenshots in CI.
-- **Availability** — the app did not open in Russia, where Cloudflare is throttled. GeoDNS
-  sends users there through a relay and everyone else through Cloudflare. Monitoring and alerts
-  cover both routes.
-- **UX** — a paper receipt had to become an intuitive screen with no dead ends. The hardest case
-  was taking only part of a dish. I prototyped the flows in Claude Design and added a receipt editor
-  before launch.
+- **LLM recognition** — chose from about 20 model pairings by evals on labelled receipts: 0.991
+  at $0.004 per receipt. The model only transcribes; code does the arithmetic
+  and flags any receipt whose total doesn't add up.
+- **Testing** — edits are stored as events, so concurrent changes survive and bills replay from
+  history. Replayed events build 77 bill states for pixel-exact screenshot tests in CI;
+  property-based tests check the settlement math against a reference implementation.
+- **Operations** — kept the app reachable in Russia, where Cloudflare is throttled. GeoDNS sends
+  users there through a TLS-passthrough relay and everyone else through Cloudflare. External
+  probes watch both routes and alert to Telegram, and data streams continuously to R2.
+- **UX** — prototyped the flows before writing code so a paper receipt becomes a screen with no
+  dead ends, including taking only part of a dish, with a receipt editor for what recognition
+  gets wrong.
 
 ### Tonkeeper — Software Engineer, Developer Platform & Developer Experience
 
@@ -64,8 +62,8 @@ from receipt photos · solo, live in beta*
 Most work is public, linked below.*
 
 - **[Tonconsole](https://github.com/tonkeeper/ton-console)**, TonAPI's developer console — moved
-  billing to one USD balance matching plan prices, with TON or USDT top-ups. Migrated state to React
-  Query incrementally, isolating caches by user so accounts in one browser never share data.
+  billing to one USD balance matching plan prices, with TON or USDT top-ups. Migrated state to
+  TanStack Query incrementally, isolating caches by user so accounts in one browser never share data.
 - **Console products** — shipped webhooks, dedicated liteservers, API plans and analytics. One
   tested pricing function made a threefold webhook price change a constants edit. Liteserver buyers
   download `global.config.json` without manual edits. Downgrades show the unspent balance instead
@@ -151,9 +149,11 @@ Most work is public, linked below.*
 ::: {typst:text:size="9.3pt"}
 - **Languages & frontend** — TypeScript, JavaScript, Python; Go (reading and small fixes); React,
   Next.js
-- **Backend & APIs** — Node.js, Fastify, NestJS, PostgreSQL, OpenAPI, REST, gRPC, webhooks, event
-  sourcing
-- **Cloud** — Cloudflare Workers, Durable Objects, AWS, Azure AI, Docker, CI/CD
+- **Backend & APIs** — Node.js, Fastify, NestJS, REST, OpenAPI, GraphQL, gRPC, webhooks,
+  OAuth/OIDC, JWT
+- **Data & messaging** — PostgreSQL, MySQL, MongoDB, Redis, RabbitMQ, event sourcing
+- **Cloud & ops** — Cloudflare (Workers, Durable Objects, R2, Pages), AWS, Azure AI, Docker,
+  GitHub Actions, NixOS, Prometheus, Grafana
 - **Testing** — Vitest, Playwright (pixel-exact screenshot tests), fast-check, Testcontainers
 - **Domains** — developer platforms and SDKs · payments and billing · Telegram Mini Apps and bots ·
   blockchain
