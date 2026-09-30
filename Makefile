@@ -29,7 +29,7 @@ PDF_RU := $(DIST)/Ilya-Mois-CV-ru.pdf
 # Link-preview images. Typst renders them from og.typ at 72 ppi, where a point
 # is a pixel, and without a timestamp, so the same source gives the same bytes.
 OG_IMGS := $(DIST)/og.png $(DIST)/og-cv.png $(DIST)/og-cv-ru.png
-OG_DEPS := og.typ public/photo.jpeg $(FONTS)
+OG_DEPS := og.typ public/photo.jpeg $(FONTS) fonts/XCharter-Bold.otf
 TYPST_OG = typst compile --root . --font-path fonts --ppi 72 --input kind=$(1) og.typ $@
 
 SRC_EN := src/cv.md

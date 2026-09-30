@@ -10,6 +10,10 @@
 
 #let serif = "Libertinus Serif"
 #let sans = "Inter"
+// The name is set as the landing page sets its heading: Charter, bold. XCharter
+// is the free Bitstream Charter, kept in fonts/ so the build does not depend on
+// the copy macOS ships.
+#let display = "XCharter"
 #let ink = rgb("#1a1a1a")
 #let muted = rgb("#565656")
 #let rule-colour = rgb("#d8d8d8")
@@ -28,7 +32,7 @@
     columns: 2, column-gutter: 80pt, align: horizon,
     portrait(340pt),
     stack(spacing: 28pt,
-      text(font: sans, size: 104pt, weight: "semibold")[Ilya Mois],
+      text(font: display, size: 104pt, weight: "bold")[Ilya Mois],
       text(font: sans, size: 40pt, weight: "semibold", fill: link-colour)[mois.pro],
     ),
   ))
@@ -41,7 +45,7 @@
       columns: (1fr, auto), align: horizon,
       stack(spacing: 22pt,
         text(font: sans, size: 22pt, weight: "semibold", fill: muted)[#if ru [РЕЗЮМЕ] else [CV]],
-        text(font: sans, size: 84pt, weight: "semibold")[Ilya Mois],
+        text(font: display, size: 84pt, weight: "bold")[Ilya Mois],
         text(size: 38pt)[Senior Full-Stack Engineer],
         text(size: 28pt, fill: muted)[#if ru [Удалённо или в офисе в Тбилиси, Грузия (GMT+4)] else [Remote or on-site in Tbilisi, Georgia (GMT+4)]],
       ),
